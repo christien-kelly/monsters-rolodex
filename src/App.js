@@ -13,6 +13,9 @@ class App extends Component {
       monsters: [],
       searchField: ''
     };
+
+    // make sure the context of this is correct | USE ARROW FUNCTIONS
+    // this.handleChange = this.handleChange.bind(this);
   }
 
   // When a component method renders do this function.
@@ -21,6 +24,11 @@ class App extends Component {
     .then(response => response.json())
     .then(users => this.setState({ monsters:users}))
     .catch(error => console.log("API endpoint was unreachable."))
+  }
+
+  // arrow functions give a lexical scoping...
+  handleChange = (e) => {
+    this.setState({searchField: e.target.value});
   }
 
   render() {
@@ -33,7 +41,7 @@ class App extends Component {
       <div className="App">
         <SearchBox 
           placeholder='search monsters'
-          handleChange ={e => this.setState({searchField: e.target.value})}
+          handleChange ={this.handleChange}
         />
         <CardList monsters={filteredMonsters}/>
       </div>
